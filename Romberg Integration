@@ -1,0 +1,23 @@
+# Romberg Integration
+# x + 10 bounded by rang [2,3]
+# n = [1,2]
+# Outputs for R(1,2) = 12.5, R(2,1) = 12.5, R(2,2) = 12.5
+
+from scipy.integrate import romberg
+
+# Define the function to integrate
+def f(x):
+    return x + 10
+
+# Define the integration limits
+a = 2
+b = 3
+
+# Define the values of n
+n_values = [1, 2]
+
+# Perform Romberg integration for each combination of n
+for n in n_values:
+    for k in range(1, n+2):
+        result = romberg(f, a, b, divmax=10, tol=1.0e-6)
+        print(f"R({n},{k}):", result)
