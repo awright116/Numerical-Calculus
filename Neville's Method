@@ -1,0 +1,29 @@
+# "Using Neville’s method, find the 2 nd degree interpolating value for f(3.7) for the following set of data"
+# x = 3.6, 3.8, 3.9
+# f(x) = 1.675, 1.436, 1.318
+
+def neville_interpolation(x, x_data, y_data):
+
+  n = len(x_data)
+  Q = [[0] * n for _ in range(n)]
+
+  for i in range(n):
+      Q[i][0] = y_data[i]
+
+  for i in range(1, n):
+      for j in range(1, i + 1):
+          Q[i][j] = ((x - x_data[i - j]) * Q[i][j - 1] - (x - x_data[i]) * Q[i - 1][j - 1]) / (x_data[i] - x_data[i - j])
+
+  return Q[n - 1][n - 1]
+
+
+# data
+x_data = [3.6, 3.8, 3.9]
+y_data = [1.675, 1.436, 1.318]
+
+# Given point
+x_interp = 3.7
+
+interpolated_value = neville_interpolation(x_interp, x_data, y_data)
+print(interpolated_value)
+print ()
