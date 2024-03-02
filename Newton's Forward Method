@@ -1,0 +1,40 @@
+# "Using Newton’s forward method, print out the polynomial approximations for degrees 1, 2, and 3 using the following set of data"
+# x = 7.2, 7.4, 7.5, 7.6
+# f(x) = 23.5492, 25.3913, 26.8224, 27.4589
+
+def newton_forward(x, y, degree):
+  n = len(x)
+  differences = [y]  # Coefficients of degree 0 polynomial (f(x))
+  for k in range(1, degree + 1):
+      new_diff = [(differences[k-1][i+1] - differences[k-1][i]) / (x[i+k] - x[i]) for i in range(n-k)]
+      differences.append(new_diff)
+  return differences
+
+from decimal import Decimal
+
+def print_divided_difference_table(xi, fxi):
+    lim = len(xi)
+    diffs = [[0.0] * lim for _ in range(lim)]
+
+    for i in range(lim):
+        diffs[i][0] = fxi[i]
+
+    for i in range(1, lim):
+        for j in range(1, i + 1):
+            diffs[i][j] = (diffs[i][j-1] - diffs[i-1][j-1]) / (xi[i] - xi[i-j])
+
+    print("Divided difference table:")
+    print()
+    for i in range(lim):
+        for j in range(i + 1):
+            if diffs[i][j] >= 0:
+                print(" ", end="")
+            print("{:.7f}".format(diffs[i][j]), end="  ")
+        print()
+
+if __name__ == "__main__":
+    xi = [7.2, 7.4, 7.5, 7.6]
+    fxi = [23.5492, 25.3913, 26.8224, 27.4589]
+
+    print_divided_difference_table(xi, fxi)
+    print()
