@@ -33,3 +33,4 @@ if __name__ == "__main__":
       polynomial = newton_polynomial(xi, fxi, target_x, degree)
       print(polynomial)
       print()
+
